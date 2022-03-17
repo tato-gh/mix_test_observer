@@ -25,17 +25,33 @@ defmodule MixTestObserver.Runner do
 
   @impl true
   def init(cfg) do
-    opts = [dirs: [cfg.file_input], name: :mix_test_observer]
-    case FileSystem.start_link(opts) do
-      {:ok, _} ->
-        FileSystem.subscribe(:mix_test_observer)
+    start_file_system(cfg)
+    |> case do
+      {:ok, pid} ->
         IO.puts "Start observation of `#{cfg.file_input}`."
-        {:ok, cfg}
+        {:ok, cfg |> Map.put(:file_system_pid, pid)}
       other ->
         IO.puts "Could not start the file system monitor."
         other
     end
   end
+
+  def start_file_system(cfg) do
+    opts = [dirs: [cfg.file_input]]
+    case FileSystem.start_link(opts) do
+      {:ok, pid} = ret ->
+        FileSystem.subscribe(pid)
+        ret
+      other ->
+        other
+    end
+  end
+
+  def restart_file_system(cfg) do
+    :ok = GenServer.stop(cfg.file_system_pid)
+    start_file_system(cfg)
+  end
+
 
   @doc """
   TODO
@@ -43,30 +59,33 @@ defmodule MixTestObserver.Runner do
   @impl true
   def handle_info({:file_event, _, {path, _events}}, state) do
     test_args = state.test_args |> Enum.join(" ")
-    IO.inspect path
 
     FileInput.parse(path)
     |> case do
       {:test, path} ->
-        IO.puts "\nRun test: #{path}"
+        IO.puts "\n\n\n\n\nRun test: #{path}"
         run_cmd("mix test #{path} #{test_args}")
-        |> IO.puts()
         |> write_file(state.file_output)
       {:run_anyway, _path} ->
-        IO.puts "\nRun test --failed"
+        IO.puts "\n\n\n\n\nRun test --failed"
         result1 = run_cmd("mix test --failed")
-        IO.puts "\nRun test --stale"
+        IO.puts "\n\n\n\n\nRun test --stale"
         result2 = run_cmd("mix test --stale")
         [result1, result2]
         |> Enum.join("\n\n")
-        |> IO.puts()
         |> write_file(state.file_output)
       {:error, message} ->
-        IO.puts "\nError: #{message}"
+        IO.puts "\n\n\n\n\nError: #{message}"
         {:error, message}
     end
 
-    {:noreply, state}
+    restart_file_system(state)
+    |> case do
+      {:ok, pid} ->
+        {:noreply, state |> Map.put(:file_system_pid, pid)}
+      _other ->
+        {:stop, "cannot observe", state |> Map.put(:file_system_pid, nil)}
+    end
   end
 
   defp run_cmd(cmd) do
@@ -75,6 +94,7 @@ defmodule MixTestObserver.Runner do
   end
 
   defp write_file(content, path) do
+    IO.puts content
     File.write(path, content)
   end
 end
