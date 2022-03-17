@@ -8,6 +8,6 @@ defmodule MixTestObserver do
   run observer
   """
   def run(args \\ []) when is_list(args) do
-    :hello
+    {:ok, args}
   end
 end
