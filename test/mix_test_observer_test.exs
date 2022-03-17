@@ -3,7 +3,9 @@ defmodule MixTestObserverTest do
   doctest MixTestObserver
 
   test "run by mix task" do
-    ret = Mix.Task.run("test.observer", ["a", "b"])
-    assert {:ok, ["a", "b"]} = ret
+    file_input = "test/support/file_input_case_test.txt"
+    file_output = "/tmp/file_output.txt"
+    ret = Mix.Task.run("test.observer", [file_input, file_output])
+    assert {:ok, ^file_input, ^file_output} = ret
   end
 end

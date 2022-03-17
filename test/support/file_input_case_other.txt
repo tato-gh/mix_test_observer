@@ -1,1 +1,1 @@
-lib/mix_test_observer.e
+lib/mix_test_observer.ex

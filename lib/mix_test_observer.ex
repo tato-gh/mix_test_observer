@@ -4,10 +4,17 @@ defmodule MixTestObserver do
   TODO same as README
   """
 
+  alias MixTestObserver.Runner
+
   @doc """
   run observer
   """
-  def run(args \\ []) when is_list(args) do
-    {:ok, args}
+  def run([file_input, file_output]) do
+    Runner.handle(file_input)
+    {:ok, file_input, file_output}
+  end
+
+  def run(_) do
+    # TODO show usage
   end
 end

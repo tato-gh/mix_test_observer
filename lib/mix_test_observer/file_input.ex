@@ -11,7 +11,7 @@ defmodule MixTestObserver.FileInput do
          {:ok, content} <- File.read(path),
          {:ok, behavior} <- parse_content(content)
     do
-      {behavior, path}
+      {behavior, content}
     else
       case_error -> case_error
     end
