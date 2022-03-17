@@ -1,18 +1,13 @@
 defmodule MixTestObserver do
   @moduledoc """
   Documentation for `MixTestObserver`.
+  TODO same as README
   """
 
   @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> MixTestObserver.hello()
-      :world
-
+  run observer
   """
-  def hello do
-    :world
+  def run(args \\ []) when is_list(args) do
+    :hello
   end
 end
