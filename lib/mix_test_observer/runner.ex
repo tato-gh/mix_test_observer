@@ -36,6 +36,11 @@ defmodule MixTestObserver.Runner do
     end
   end
 
+  @impl true
+  def terminate(reason, state) do
+    GenServer.stop(state.file_system_pid, reason)
+  end
+
   def start_file_system(cfg) do
     opts = [dirs: [cfg.file_input]]
     case FileSystem.start_link(opts) do
@@ -63,19 +68,19 @@ defmodule MixTestObserver.Runner do
     FileInput.parse(path)
     |> case do
       {:test, path} ->
-        IO.puts "\n\n\n\n\nRun test: #{path}"
-        run_cmd("mix test #{path} #{test_args}")
+        IO.puts "\n\n==== RUN: #{path}"
+        run_cmd("mix test #{test_args} #{path}")
         |> write_file(state.file_output)
       {:run_anyway, _path} ->
-        IO.puts "\n\n\n\n\nRun test --failed"
+        IO.puts "\n\n==== RUN: test --failed"
         result1 = run_cmd("mix test --failed")
-        IO.puts "\n\n\n\n\nRun test --stale"
+        IO.puts "\n\n==== RUN: test --stale"
         result2 = run_cmd("mix test --stale")
         [result1, result2]
-        |> Enum.join("\n\n")
+        |> Enum.join("\n\n\n\n")
         |> write_file(state.file_output)
       {:error, message} ->
-        IO.puts "\n\n\n\n\nError: #{message}"
+        IO.puts "\n\n==== Error: #{message}"
         {:error, message}
     end
 
@@ -95,6 +100,8 @@ defmodule MixTestObserver.Runner do
 
   defp write_file(content, path) do
     IO.puts content
-    File.write(path, content)
+    file = File.open!(path, [:write])
+    IO.write(file, content)
+    File.close(file)
   end
 end

@@ -8,6 +8,7 @@ defmodule MixTestObserver do
 
   @doc """
   run observer
+  TODO: args validation
   """
   def run([_file_input, _file_output | _test_args] = args) do
     :ok = Application.ensure_started(:file_system)

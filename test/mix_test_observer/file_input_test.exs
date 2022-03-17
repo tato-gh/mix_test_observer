@@ -10,7 +10,8 @@ defmodule MixTestObserver.FileInputTest do
     end
 
     test "return `:error` when empty" do
-      assert {:error, "nothing"} = FileInput.parse("test/support/file_input_empty.txt")
+      path = "test/support/file_input_empty.txt"
+      assert {:error, "nothing"} = FileInput.parse(path)
     end
 
     test "return `:test` when path is `test/` directory" do
