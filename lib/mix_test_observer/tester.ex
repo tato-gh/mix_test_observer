@@ -10,7 +10,7 @@ defmodule MixTestObserver.Tester do
   @doc """
   TODO
   """
-  def start(test_args, output_file_path) do
+  def start(test_args, output_file_path \\ nil) do
     GenServer.start_link(
       __MODULE__,
       %{
@@ -64,12 +64,13 @@ defmodule MixTestObserver.Tester do
   defp run_cmd(cmd) do
     IO.puts "\n\n==== RUN: #{cmd}"
     {output, _} = System.cmd("sh", ["-c", cmd], env: [{"MIX_ENV", "test"}])
+    IO.puts output
     output
   end
 
-  defp report(content, path) do
-    IO.puts content
+  defp report(_content, nil), do: nil
 
+  defp report(content, path) do
     file = File.open!(path, [:write])
     IO.write(file, content)
     File.close(file)

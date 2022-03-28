@@ -10,7 +10,7 @@ defmodule MixTestObserver do
   run observer
   TODO: args validation
   """
-  def run([input_file_path, output_file_path | test_args]) do
+  def run(input_file_path, test_args, output_file_path \\ nil) do
     :ok = Application.ensure_started(:file_system)
     with \
          {:ok, _pid} <- FileObserver.start(input_file_path),
@@ -22,19 +22,16 @@ defmodule MixTestObserver do
     end
   end
 
-  def run(_) do
-    show_help()
-  end
-
-  defp show_help do
+  def show_help do
     IO.puts """
     Invalid argument(or something went wrong).
 
-    Usage: mix test.observer FILE1 FILE2 MIX_TEST_OPTIONS
+    Usage: mix test.observer FILE1 [OPTIONS]
+    Usage: mix test.observer FILE1 --output FILE2 [OPTIONS]
 
-      FILE1: require existing file path.
-      FILE2: require file path.
-      MIX_TEST_OPTIONS: same as `mix test` options. e.g. `--include external:true`
+      FILE1: require existing path.
+      FILE2: the file which test results are output.
+      OPTIONS: same as `mix test` options. e.g. `--include external:true`
     """
   end
 
