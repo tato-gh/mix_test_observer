@@ -11,12 +11,22 @@ defmodule MixTestObserver.FileInputTest do
 
     test "return `:error` when empty" do
       path = "test/support/file_input_empty.txt"
-      assert {:error, "nothing"} = FileInput.parse(path)
+      assert {:error, "No entry."} = FileInput.parse(path)
     end
 
-    test "return `:test` when path is `test/` directory" do
+    test "return `:test` when path is started with `test/` directory" do
       path = "test/support/file_input_case_test.txt"
       assert {:test, _} = FileInput.parse(path)
+    end
+
+    test "return `:test` when path has `/test/` directory" do
+      path = "test/support/.input_file.txt"
+      content =
+        File.read!("test/support/file_input_case_test.txt")
+        |> Path.absname()
+      File.write!(path, content)
+      assert {:test, _} = FileInput.parse(path)
+      File.rm(path)
     end
 
     test "return `:run_anyway` when path is NOT `test/` directory" do

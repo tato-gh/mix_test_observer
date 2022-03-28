@@ -13,8 +13,8 @@ defmodule MixTestObserver do
   def run([input_file_path, output_file_path | test_args]) do
     :ok = Application.ensure_started(:file_system)
     with \
-         :ok <- FileObserver.start(input_file_path),
-         :ok <- Tester.start(test_args, output_file_path)
+         {:ok, _pid} <- FileObserver.start(input_file_path),
+         {:ok, _pid} <- Tester.start(test_args, output_file_path)
     do
       no_halt_unless_in_repl()
     else

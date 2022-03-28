@@ -23,11 +23,11 @@ defmodule MixTestObserver.FileInput do
     |> content_behavior()
   end
 
-  defp content_behavior(""), do: {:error, "nothing"}
+  defp content_behavior(""), do: {:error, "No entry."}
 
   defp content_behavior(content) do
     content
-    |> String.match?(~r|\Atest/|u)
+    |> String.match?(~r/(\Atest\/|\/test\/)/u)
     |> case do
       true -> {:ok, :test}
       false -> {:ok, :run_anyway}

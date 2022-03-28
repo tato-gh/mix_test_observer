@@ -19,7 +19,6 @@ defmodule MixTestObserver.Tester do
       },
       name: __MODULE__
     )
-    :ok
   end
 
   @doc """
@@ -45,13 +44,13 @@ defmodule MixTestObserver.Tester do
     |> case do
       {:test, path} ->
         run_cmd("mix test #{test_args} #{path}")
-        |> write_file(state.output_file_path)
+        |> report(state.output_file_path)
       {:run_anyway, _path} ->
         result1 = run_cmd("mix test --failed")
         result2 = run_cmd("mix test --stale")
         [result1, result2]
         |> Enum.join("\n\n\n\n")
-        |> write_file(state.output_file_path)
+        |> report(state.output_file_path)
       {:error, message} ->
         IO.puts "\n\n==== Error: #{message}"
         {:error, message}
@@ -68,7 +67,7 @@ defmodule MixTestObserver.Tester do
     output
   end
 
-  defp write_file(content, path) do
+  defp report(content, path) do
     IO.puts content
 
     file = File.open!(path, [:write])

@@ -24,9 +24,9 @@ defmodule MixTestObserver.FileObserver do
         name: __MODULE__
       )
       |> case do
-        {:ok, _} ->
+        {:ok, pid} ->
           IO.puts "Start observation of `#{path}`."
-          :ok
+          {:ok, pid}
         _ ->
           IO.puts "Could not start the file system monitor."
           :ng
