@@ -21,9 +21,11 @@ defmodule MixTestObserver.FileInputTest do
 
     test "return `:test` when path has `/test/` directory" do
       path = "test/support/.input_file.txt"
+
       content =
         File.read!("test/support/file_input_case_test.txt")
         |> Path.absname()
+
       File.write!(path, content)
       assert {:test, _} = FileInput.parse(path)
       File.rm(path)

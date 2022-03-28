@@ -7,10 +7,8 @@ defmodule MixTestObserver.FileInput do
   TODO
   """
   def parse(path) do
-    with \
-         {:ok, content} <- File.read(path),
-         {:ok, behavior} <- parse_content(content)
-    do
+    with {:ok, content} <- File.read(path),
+         {:ok, behavior} <- parse_content(content) do
       {behavior, content}
     else
       case_error -> case_error

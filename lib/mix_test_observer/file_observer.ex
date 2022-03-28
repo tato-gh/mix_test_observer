@@ -11,9 +11,7 @@ defmodule MixTestObserver.FileObserver do
   TODO
   """
   def start(path) do
-    with \
-         true <- File.exists?(path)
-    do
+    with true <- File.exists?(path) do
       GenServer.start_link(
         __MODULE__,
         %{
@@ -25,10 +23,11 @@ defmodule MixTestObserver.FileObserver do
       )
       |> case do
         {:ok, pid} ->
-          IO.puts "Start observation of `#{path}`."
+          IO.puts("Start observation of `#{path}`.")
           {:ok, pid}
+
         _ ->
-          IO.puts "Could not start the file system monitor."
+          IO.puts("Could not start the file system monitor.")
           :ng
       end
     else
@@ -49,6 +48,7 @@ defmodule MixTestObserver.FileObserver do
     |> case do
       {:ok, pid} ->
         {:ok, state |> Map.put(:file_system_pid, pid)}
+
       other ->
         other
     end
@@ -69,6 +69,7 @@ defmodule MixTestObserver.FileObserver do
     if not state.lock do
       Tester.run(path)
     end
+
     {
       :noreply,
       state |> Map.put(:lock, true)
@@ -96,10 +97,12 @@ defmodule MixTestObserver.FileObserver do
   """
   def start_file_system(path) do
     opts = [dirs: [path]]
+
     case FileSystem.start_link(opts) do
       {:ok, pid} = ret ->
         FileSystem.subscribe(pid)
         ret
+
       other ->
         other
     end

@@ -24,7 +24,7 @@ defmodule MixTestObserver.FileObserverTest do
 
     setup do
       {:ok, pid} = FileObserver.start(@input_file)
-      :sys.replace_state(pid, & Map.put(&1, :lock, true))
+      :sys.replace_state(pid, &Map.put(&1, :lock, true))
       [pid: pid]
     end
 

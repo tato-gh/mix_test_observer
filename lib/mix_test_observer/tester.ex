@@ -45,14 +45,17 @@ defmodule MixTestObserver.Tester do
       {:test, path} ->
         run_cmd("mix test #{test_args} #{path}")
         |> report(state.output_file_path)
+
       {:run_anyway, _path} ->
         result1 = run_cmd("mix test --failed")
         result2 = run_cmd("mix test --stale")
+
         [result1, result2]
         |> Enum.join("\n\n\n\n")
         |> report(state.output_file_path)
+
       {:error, message} ->
-        IO.puts "\n\n==== Error: #{message}"
+        IO.puts("\n\n==== Error: #{message}")
         {:error, message}
     end
 
@@ -62,9 +65,9 @@ defmodule MixTestObserver.Tester do
   end
 
   defp run_cmd(cmd) do
-    IO.puts "\n\n==== RUN: #{cmd}"
+    IO.puts("\n\n==== RUN: #{cmd}")
     {output, _} = System.cmd("sh", ["-c", cmd], env: [{"MIX_ENV", "test"}])
-    IO.puts output
+    IO.puts(output)
     output
   end
 

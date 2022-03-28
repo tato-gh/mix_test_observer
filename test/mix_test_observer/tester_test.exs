@@ -28,8 +28,12 @@ defmodule MixTestObserver.TesterTest do
     test "output test result to stdio" do
       output =
         capture_io(fn ->
-          Tester.handle_cast({:run, "test/support/file_input_case_test.txt"}, %{test_args: [], output_file_path: nil})
+          Tester.handle_cast({:run, "test/support/file_input_case_test.txt"}, %{
+            test_args: [],
+            output_file_path: nil
+          })
         end)
+
       assert String.match?(output, ~r/0 failures/)
     end
   end

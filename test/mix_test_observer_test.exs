@@ -15,6 +15,7 @@ defmodule MixTestObserverTest do
       capture_io(fn ->
         Mix.Task.run("test.observer")
       end)
+
     assert String.match?(ret, ~r/Usage/)
   end
 
