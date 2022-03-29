@@ -10,6 +10,7 @@ defmodule MixTestObserver.Tester do
   @doc """
   Public interface to start.
   """
+  @spec start(test_args :: list, output_file_path :: String.t() | nil) :: {:ok, pid()}
   def start(test_args, output_file_path \\ nil) do
     GenServer.start_link(
       __MODULE__,
@@ -24,6 +25,7 @@ defmodule MixTestObserver.Tester do
   @doc """
   Interface to run test.
   """
+  @spec run(input_file_path :: String.t()) :: :ok
   def run(input_file_path) do
     GenServer.cast(__MODULE__, {:run, input_file_path})
   end

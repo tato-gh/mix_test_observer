@@ -10,6 +10,7 @@ defmodule MixTestObserver.FileObserver do
   @doc """
   Public interface to start observation.
   """
+  @spec start(path :: String.t()) :: {:ok, pid :: pid()} | :ng
   def start(path) do
     with true <- File.exists?(path) do
       GenServer.start_link(
@@ -38,6 +39,7 @@ defmodule MixTestObserver.FileObserver do
   @doc """
   Public interface to unlock.
   """
+  @spec unlock() :: :ok
   def unlock do
     GenServer.cast(__MODULE__, :unlock)
   end

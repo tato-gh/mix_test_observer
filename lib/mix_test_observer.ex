@@ -6,7 +6,7 @@ defmodule MixTestObserver do
   alias MixTestObserver.{FileObserver, Tester}
 
   @doc """
-  Run observer.
+  Run observer and wait infinity.
   """
   def run(input_file_path, test_args, output_file_path \\ nil) do
     :ok = Application.ensure_started(:file_system)
@@ -14,14 +14,18 @@ defmodule MixTestObserver do
     with {:ok, _pid} <- FileObserver.start(input_file_path),
          {:ok, _pid} <- Tester.start(test_args, output_file_path) do
       no_halt()
+      :ok
     else
-      _ -> show_help()
+      _ ->
+        show_help()
+        :ng
     end
   end
 
   @doc """
   Show helps.
   """
+  @spec show_help() :: :ok
   def show_help do
     IO.puts("""
     Invalid argument(or something went wrong).

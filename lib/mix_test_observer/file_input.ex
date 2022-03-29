@@ -3,9 +3,12 @@ defmodule MixTestObserver.FileInput do
   FileInput is obtained by parsing the observed file.
   """
 
+  @type t() :: {behavior :: atom, content :: String.t()}
+
   @doc """
   Return test context `:test` or `:run_anyway` and target filepath.
   """
+  @spec parse(path :: String.t()) :: t()
   def parse(path) do
     with {:ok, content} <- File.read(path),
          {:ok, behavior} <- parse_content(content) do
