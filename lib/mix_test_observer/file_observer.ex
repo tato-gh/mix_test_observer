@@ -1,6 +1,6 @@
 defmodule MixTestObserver.FileObserver do
   @moduledoc """
-  TODO
+  FileObserver is the process to observe file and call/cast event.
   """
 
   use GenServer
@@ -8,7 +8,7 @@ defmodule MixTestObserver.FileObserver do
   alias MixTestObserver.Tester
 
   @doc """
-  TODO
+  Public interface to start observation.
   """
   def start(path) do
     with true <- File.exists?(path) do
@@ -36,7 +36,7 @@ defmodule MixTestObserver.FileObserver do
   end
 
   @doc """
-  Interface to unlock.
+  Public interface to unlock.
   """
   def unlock do
     GenServer.cast(__MODULE__, :unlock)
@@ -62,7 +62,7 @@ defmodule MixTestObserver.FileObserver do
   end
 
   @doc """
-  Run test through Tester. Observer must be locked immediately to prevent test repeatedly.
+  - :file_event - Run test through Tester. Observer must be locked immediately to prevent test repeatedly.
   """
   @impl true
   def handle_info({:file_event, _, {path, _events}}, state) do
@@ -77,8 +77,7 @@ defmodule MixTestObserver.FileObserver do
   end
 
   @doc """
-  Unlock file_event.
-  And restart `file_system`, if not `:file_event` occurs only onetime.
+  - :unlock - Unlock file_event handling and restart `file_system`, if not, `:file_event` occurs only onetime.
   """
   @impl true
   def handle_cast(:unlock, state) do
@@ -92,10 +91,7 @@ defmodule MixTestObserver.FileObserver do
     }
   end
 
-  @doc """
-  TODO
-  """
-  def start_file_system(path) do
+  defp start_file_system(path) do
     opts = [dirs: [path]]
 
     case FileSystem.start_link(opts) do
@@ -108,10 +104,7 @@ defmodule MixTestObserver.FileObserver do
     end
   end
 
-  @doc """
-  TODO
-  """
-  def restart_file_system(state) do
+  defp restart_file_system(state) do
     :ok = GenServer.stop(state.file_system_pid)
     start_file_system(state.path)
   end

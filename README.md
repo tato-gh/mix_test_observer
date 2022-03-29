@@ -1,6 +1,6 @@
 # MixTestObserver
 
-MixTestObserver is a semiauto test runner. `mix test` run when each time you write whose file path to the observing file.
+MixTestObserver is a semiauto test runner. Run `mix test` when each time you write whose target path to the observing file.
 
 For why:
 
@@ -15,8 +15,6 @@ For your information:
 
 
 ## Installation
-
-NOTICE: Work in progress.
 
 If available in Hex, the package can be installed by adding `mix_test_observer` to your list of dependencies in `mix exs`:
 
@@ -37,8 +35,6 @@ and published on [HexDocs](https://hexdocs.pm).
 
 ## Usage
 
-NOTICE: Work in progress.
-
 Run the mix task:
 
 ```
@@ -47,10 +43,10 @@ mix test.observer <filepath>
 
 Start observing `<filepath>`.
 
-Next try writing test target filepath to `<filepath>` like `$ echo 'test/' > <filepath>`,
+Next try writing test target path to `<filepath>` like `$ echo 'test/' > <filepath>`,
 then you can get the test results (`mix test test/`).
 
-- If test target filepath is not `test/**/*`, the observer run `mix test --failure` and `mix test --stale`.
+- If test target path is not matched `test/` or `*/test/*`, the observer run `mix test --failure` and `mix test --stale`.
 - If you hope to get test results in file, run with `--output <output_filepath>` following your `<filepath>`, like `mix test.observer <filepath> --output <output_filepath>`.
 - If you hope to configure `mix test` options, you can add it to the end of command, like `mix test.observer <filepath> --include external:true`.
 

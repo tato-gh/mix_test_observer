@@ -1,6 +1,6 @@
 defmodule MixTestObserver.Tester do
   @moduledoc """
-  TODO
+  Tester is the process to run `mix test`.
   """
 
   use GenServer
@@ -8,7 +8,7 @@ defmodule MixTestObserver.Tester do
   alias MixTestObserver.{FileObserver, FileInput}
 
   @doc """
-  TODO
+  Public interface to start.
   """
   def start(test_args, output_file_path \\ nil) do
     GenServer.start_link(
@@ -22,7 +22,7 @@ defmodule MixTestObserver.Tester do
   end
 
   @doc """
-  Interface to run.
+  Interface to run test.
   """
   def run(input_file_path) do
     GenServer.cast(__MODULE__, {:run, input_file_path})
@@ -34,7 +34,7 @@ defmodule MixTestObserver.Tester do
   end
 
   @doc """
-  TODO
+  - :run - Run the `mix test` and show (and write) results.
   """
   @impl true
   def handle_cast({:run, input_file_path}, state) do

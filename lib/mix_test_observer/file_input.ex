@@ -1,10 +1,10 @@
 defmodule MixTestObserver.FileInput do
   @moduledoc """
-  TODO
+  FileInput is obtained by parsing the observed file.
   """
 
   @doc """
-  TODO
+  Return test context `:test` or `:run_anyway` and target filepath.
   """
   def parse(path) do
     with {:ok, content} <- File.read(path),

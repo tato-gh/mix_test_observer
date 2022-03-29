@@ -1,14 +1,12 @@
 defmodule MixTestObserver do
   @moduledoc """
-  Documentation for `MixTestObserver`.
-  TODO same as README
+  MixTestObserver is a semiauto test runner. Run `mix test` when each time you write whose target path to the observing file.
   """
 
   alias MixTestObserver.{FileObserver, Tester}
 
   @doc """
-  run observer
-  TODO: args validation
+  Run observer.
   """
   def run(input_file_path, test_args, output_file_path \\ nil) do
     :ok = Application.ensure_started(:file_system)
@@ -21,6 +19,9 @@ defmodule MixTestObserver do
     end
   end
 
+  @doc """
+  Show helps.
+  """
   def show_help do
     IO.puts("""
     Invalid argument(or something went wrong).
