@@ -13,7 +13,7 @@ defmodule MixTestObserver do
 
     with {:ok, _pid} <- FileObserver.start(input_file_path),
          {:ok, _pid} <- Tester.start(test_args, output_file_path) do
-      no_halt_unless_in_repl()
+      no_halt()
     else
       _ -> show_help()
     end
@@ -35,9 +35,7 @@ defmodule MixTestObserver do
     """)
   end
 
-  defp no_halt_unless_in_repl do
-    unless Code.ensure_loaded?(IEx) && IEx.started?() do
-      :timer.sleep(:infinity)
-    end
+  defp no_halt do
+    :timer.sleep(:infinity)
   end
 end

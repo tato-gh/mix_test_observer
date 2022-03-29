@@ -8,6 +8,7 @@ defmodule MixTestObserver.MixProject do
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      dialyzer: [plt_add_apps: [:mix]],
 
       # Docs
       name: "MixTestObserver",
@@ -27,6 +28,7 @@ defmodule MixTestObserver.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.28", only: [:dev], runtime: false},
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:file_system, "~> 0.2"}
     ]
   end
