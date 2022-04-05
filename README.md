@@ -13,8 +13,20 @@ For your information:
 
 - Maybe what you're looking for is [mix-test.watch](https://github.com/lpil/mix-test.watch) which is _auto_ test runner.
 
+## Versions
+
+This has been confirmed to work under the following conditions.
+
+```
+$ elixir -v
+Erlang/OTP 24 [erts-12.2] [source] [64-bit] [smp:8:8] [ds:8:8:10] [async-threads:1] [jit]
+
+Elixir 1.13.1 (compiled with Erlang/OTP 24)
+```
 
 ## Installation
+
+**NOTE: Draft**
 
 If available in Hex, the package can be installed by adding `mix_test_observer` to your list of dependencies in `mix exs`:
 
@@ -57,7 +69,19 @@ For your information:
 
 ## License
 
-Licensed under the MIT License. See LICENSE file.
+Copyright 2022 ta.to.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 
 ## Thanks
