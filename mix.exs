@@ -6,6 +6,7 @@ defmodule MixTestObserver.MixProject do
       app: :mix_test_observer,
       version: "0.1.0",
       elixir: "~> 1.13",
+      escript: [main_module: MixTestObserver.Cli],
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       dialyzer: [plt_add_apps: [:mix]],
