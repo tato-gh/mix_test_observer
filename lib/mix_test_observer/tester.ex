@@ -42,11 +42,19 @@ defmodule MixTestObserver.Tester do
   def handle_cast({:run, input_file_path}, state) do
     test_args = state.test_args |> Enum.join(" ")
 
+    run_test(input_file_path, test_args, state.output_file_path)
+    FileObserver.unlock()
+    IO.puts "\nWaiting...please write test target to `#{input_file_path}` or Enter to rerun."
+
+    {:noreply, state}
+  end
+
+  def run_test(input_file_path, test_args, output_file_path) do
     FileInput.parse(input_file_path)
     |> case do
       {:test, path} ->
         run_cmd("mix test #{test_args} #{path}")
-        |> report(state.output_file_path)
+        |> report(output_file_path)
 
       {:run_anyway, _path} ->
         result1 = run_cmd("mix test --failed")
@@ -54,16 +62,12 @@ defmodule MixTestObserver.Tester do
 
         [result1, result2]
         |> Enum.join("\n\n\n\n")
-        |> report(state.output_file_path)
+        |> report(output_file_path)
 
       {:error, message} ->
         IO.puts("\n\n==== Error: #{message}")
         {:error, message}
     end
-
-    FileObserver.unlock()
-
-    {:noreply, state}
   end
 
   defp run_cmd(cmd) do

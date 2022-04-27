@@ -13,7 +13,7 @@ defmodule MixTestObserver do
 
     with {:ok, _pid} <- FileObserver.start(input_file_path),
          {:ok, _pid} <- Tester.start(test_args, output_file_path) do
-      no_halt()
+      wait(input_file_path, test_args, output_file_path)
       :ok
     else
       _ ->
@@ -39,7 +39,12 @@ defmodule MixTestObserver do
     """)
   end
 
-  defp no_halt do
-    :timer.sleep(:infinity)
+  defp wait(input_file_path, test_args, output_file_path) do
+    IO.puts "\nWaiting...please write test target to `#{input_file_path}` or Enter to rerun."
+    IO.gets ""
+
+    # if enter pressed
+    MixTestObserver.Tester.run_test(input_file_path, test_args, output_file_path)
+    wait(input_file_path, test_args, output_file_path)
   end
 end
