@@ -44,7 +44,6 @@ defmodule MixTestObserver.Tester do
 
     run_test(input_file_path, test_args, state.output_file_path)
     FileObserver.unlock()
-    IO.puts "\nWaiting...please write test target to `#{input_file_path}` or Enter to rerun."
 
     {:noreply, state}
   end

@@ -13,6 +13,7 @@ defmodule MixTestObserver do
 
     with {:ok, _pid} <- FileObserver.start(input_file_path),
          {:ok, _pid} <- Tester.start(test_args, output_file_path) do
+      IO.puts "Please write test target to `#{input_file_path}`, or ENTER to rerun."
       wait(input_file_path, test_args, output_file_path)
       :ok
     else
@@ -40,7 +41,6 @@ defmodule MixTestObserver do
   end
 
   defp wait(input_file_path, test_args, output_file_path) do
-    IO.puts "\nWaiting...please write test target to `#{input_file_path}` or Enter to rerun."
     IO.gets ""
 
     # if enter pressed
