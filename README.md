@@ -26,8 +26,6 @@ Elixir 1.13.1 (compiled with Erlang/OTP 24)
 
 ## Installation
 
-**NOTE: Draft**
-
 If available in Hex, the package can be installed by adding `mix_test_observer` to your list of dependencies in `mix exs`:
 
 ```
@@ -38,10 +36,10 @@ def deps do
 end
 ```
 
-See also [file_system hex](https://github.com/falood/file_system#system-support), on which this package depends.
+See also [FileSystem hex](https://github.com/falood/file_system#system-support), on which this package depends.
 
-Documentation is [here](<https://hexdocs.pm/mix_test_observer>).
-Documentation is generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
+Documentation is [here](https://hexdocs.pm/mix_test_observer).
+Documentation is generated with [ExDoc](https://github.com/elixir-lang/ex_doc).
 and published on [HexDocs](https://hexdocs.pm).
 
 
