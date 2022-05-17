@@ -24,3 +24,5 @@ mix_test_observer-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+hex.config

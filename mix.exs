@@ -1,20 +1,23 @@
 defmodule MixTestObserver.MixProject do
   use Mix.Project
 
+  @version "0.1.0"
+  @source_url "https://github.com/Ta-To/mix_test_observer"
+
   def project do
     [
       app: :mix_test_observer,
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.13",
       escript: [main_module: MixTestObserver.Cli],
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      dialyzer: [plt_add_apps: [:mix]],
-
       # Docs
       name: "MixTestObserver",
-      source_url: "https://github.com/Ta-To/mix_test_observer",
-      docs: docs()
+      description: "MixTestObserver is a semiauto test runner.",
+      source_url: @source_url,
+      docs: docs(),
+      package: package()
     ]
   end
 
@@ -39,6 +42,14 @@ defmodule MixTestObserver.MixProject do
       main: "readme",
       api_reference: false,
       extras: ["README.md"]
+    ]
+  end
+
+  defp package do
+    [
+      maintainers: ["ta.to."],
+      licenses: ["Apache-2.0"],
+      links: %{"GitHub" => @source_url}
     ]
   end
 end
