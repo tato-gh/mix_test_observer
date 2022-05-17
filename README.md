@@ -4,7 +4,6 @@ MixTestObserver is a semiauto test runner. Run `mix test` when each time you wri
 
 For why:
 
-- Elixir execution environment is separated from my editor (but sharing some directories).
 - I want to run tests right away when I write codes.
 - I sometimes think that run tests when I want it.
 
@@ -25,8 +24,6 @@ Elixir 1.13.1 (compiled with Erlang/OTP 24)
 ```
 
 ## Installation
-
-If available in Hex, the package can be installed by adding `mix_test_observer` to your list of dependencies in `mix exs`:
 
 ```
 def deps do
