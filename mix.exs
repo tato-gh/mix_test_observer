@@ -17,7 +17,8 @@ defmodule MixTestObserver.MixProject do
       description: "MixTestObserver is a semiauto test runner.",
       source_url: @source_url,
       docs: docs(),
-      package: package()
+      package: package(),
+      dialyzer: [plt_add_apps: [:mix]]
     ]
   end
 

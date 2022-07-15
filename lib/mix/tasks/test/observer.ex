@@ -16,14 +16,17 @@ defmodule Mix.Tasks.Test.Observer do
 
   use Mix.Task
 
+  @impl Mix.Task
   def run([input_file_path, "--output", output_file_path | test_args]) do
     MixTestObserver.run(input_file_path, test_args, output_file_path)
   end
 
+  @impl Mix.Task
   def run([input_file_path | test_args]) do
     MixTestObserver.run(input_file_path, test_args)
   end
 
+  @impl Mix.Task
   def run(_other) do
     MixTestObserver.show_help()
   end
