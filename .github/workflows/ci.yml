@@ -72,10 +72,6 @@ jobs:
             ${{ runner.os }}-${{ matrix.otp-version }}-${{ matrix.elixir-version }}-${{ hashFiles('mix.lock') }}
           restore-keys: |
             ${{ runner.os }}-mix-
-      - name: Mix deps.get
-        run: |
-          mix deps.get
-          mix deps.compile --only-deps
       - name: Mix Test
         run: mix test
   mix-dialyzer:
