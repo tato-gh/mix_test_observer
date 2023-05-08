@@ -80,7 +80,7 @@ defmodule MixTestObserver.Tester do
   defp report(_content, nil), do: nil
 
   defp report(content, path) do
-    file = File.open!(path, [:write])
+    file = File.open!(path, [:write, :utf8])
     IO.write(file, content)
     File.close(file)
   end
