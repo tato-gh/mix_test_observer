@@ -52,11 +52,11 @@ defmodule MixTestObserver.Tester do
     FileInput.parse(input_file_path)
     |> case do
       {:test, path} ->
-        run_cmd("test #{test_args} #{path}")
+        run_cmd("test #{test_args} #{path} --trace")
         |> report(output_file_path)
 
       {:run_anyway, _path} ->
-        result1 = run_cmd("test --failed")
+        result1 = run_cmd("test --failed --trace")
         result2 = run_cmd("test --stale")
 
         [result1, result2]
