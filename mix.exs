@@ -1,8 +1,8 @@
 defmodule MixTestObserver.MixProject do
   use Mix.Project
 
-  @version "0.1.1"
-  @source_url "https://github.com/Ta-To/mix_test_observer"
+  @version "0.1.2"
+  @source_url "https://github.com/tato-gh/mix_test_observer"
 
   def project do
     [
@@ -34,7 +34,7 @@ defmodule MixTestObserver.MixProject do
     [
       {:ex_doc, "~> 0.28", only: [:dev], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:file_system, "~> 0.2"}
+      {:file_system, "~> 1.0"}
     ]
   end
 
